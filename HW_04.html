@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>d3-start</title>
+    <script src="https://d3js.org/d3.v3.js"></script>
+    <style>
+        div{
+            font-size: 7px;
+        }
+    </style>
+</head>
+<body>
+  <svg id="svg1" width="400" height="300">
+      
+  </svg>
+   
+   <script>
+       d3.json("invoice-taipei.json", function(dataSet){
+           var svg = d3.select("svg");
+           var count = 0;
+           for(var i=0; i<dataSet.length; i++){
+                if(dataSet[i].date==="2016/8/1" && dataSet[i].amount > 1000000000 && dataSet[i].cid==="A"){
+                      d3.select("svg")
+                        .append("rect")
+                        .attr({
+                        x: 100,
+                        y: 10+12*count,
+                        width: dataSet[i].amount/100000000,
+                        height: 10,
+                        fill: "red"
+                      });
+                      d3.select("svg")
+                        .append("text")
+                        .attr({
+                        x: 0,
+                        y: 16+12*count,
+                        "font-size": 5
+                      }).text(count + 1 +"." + dataSet[i].industry);
+                      count = count + 1;
+                 }
+                
+            }
+       });
+
+    </script>
+           <script>
+            var arr = [85, 60, 99, 49, 77, 82]
+            bind(arr);
+            render();
+            
+            function bind(data){
+                var selection = d3.select("body")
+                .select(".second_col")
+                .selectAll("div")
+                .data(data);
+                
+                selection.enter().append("div");
+                selection.exit().remove();
+            }
+
+            function render(){
+                
+                d3.select(".second_col")
+                  .selectAll("div")
+                  .text(function(d,i){
+                    return i+1 + ":" + d;
+                  });
+                d3.select(".second_col")
+                  .selectAll("div")
+                  .style({
+                            color: function(d){
+                                if(d<70){
+                                    return "red"
+                                }
+                                else{
+                                    return "black"
+                                }
+                            } 
+                });
+            };          
+        </script>
+        
+        <script>
+   <input type="button" value="點我" onclick="update()"> <!--add buttom-->
+
+    var h=400;
+    var w=700;
+    var p=50;
+//    svg scale
+    
+    var arr=[45,75,96,35,88,69];
+        
+    svg(w,h,p);
+    bind(arr);
+    render(w,h,p);
+    bind2(arr);
+    render2(w,h,p);
+//    add number on the buttome
+    
+    function svg(w,h,p){
+        d3.select("body").append("svg").attr({
+            width: w,
+            height:h
+        })
+    }
+    function update(){
+        var num = random(20, 100);
+        arr.push(num);
+        bind(arr);
+        render(w,h,p);
+        bind2(arr);
+        render2(w,h,p);
+    }
+    function bind(data){
+        var selection = d3.select("svg")
+        .selectAll("rect")
+        .data(data);
+        selection.enter().append("rect");
+        selection.exit().remove();
+    }
+    
+    function render(w,h,p){
+        d3.selectAll("rect").attr({
+            x:function(d,i){return p+45*i;},
+            y:function(d){return h-p-d;},
+            width:40,
+            height: function(d){return d;},
+            fill: function(d){
+            if(d<70){
+            return "red";
+        }
+            else{
+            return "lightgreen";
+                                  }
+        }
+        })
+    }
+    
+ function bind2(data){
+        var selection = d3.select("svg")
+        .selectAll("text")
+        .data(data);
+        selection.enter().append("text");
+        selection.exit().remove();
+    }
+    
+    function render2(w,h,p){
+        d3.selectAll("text").attr({
+            x:function(d,i){return p+45*i+12;},
+            y:function(d){return h-p+15;},
+            fill:"black"
+        }).text(function(d){return d;})
+    }
+    function random(n,m){
+        return Math.ceil(Math.random()*(m-n)+n);
+    }
+    </script>
+</body>
+</html>

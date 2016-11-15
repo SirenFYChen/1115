@@ -17,7 +17,7 @@
    
    <script>
        d3.json("invoice-taipei.json", function(dataSet){
-           var svg = d3.select("svg");
+           var svg = d3.select("svg1");
            var count = 0;
            for(var i=0; i<dataSet.length; i++){
                 if(dataSet[i].date==="2016/8/1" && dataSet[i].amount > 1000000000 && dataSet[i].cid==="A"){
@@ -44,42 +44,7 @@
        });
 
     </script>
-           <script>
-            var arr = [85, 60, 99, 49, 77, 82]
-            bind(arr);
-            render();
-            
-            function bind(data){
-                var selection = d3.select("body")
-                .select(".second_col")
-                .selectAll("div")
-                .data(data);
-                
-                selection.enter().append("div");
-                selection.exit().remove();
-            }
-
-            function render(){
-                
-                d3.select(".second_col")
-                  .selectAll("div")
-                  .text(function(d,i){
-                    return i+1 + ":" + d;
-                  });
-                d3.select(".second_col")
-                  .selectAll("div")
-                  .style({
-                            color: function(d){
-                                if(d<70){
-                                    return "red"
-                                }
-                                else{
-                                    return "black"
-                                }
-                            } 
-                });
-            };          
-        </script>
+           
         
         <script>
    <input type="button" value="點我" onclick="update()"> <!--add buttom-->
@@ -100,6 +65,7 @@
     
     function svg(w,h,p){
         d3.select("body").append("svg").attr({
+            id="svg3"
             width: w,
             height:h
         })
@@ -113,15 +79,15 @@
         render2(w,h,p);
     }
     function bind(data){
-        var selection = d3.select("svg")
-        .selectAll("rect")
+        var selection = d3.select("svg3")
+        .selectAll("svg3 rect")
         .data(data);
         selection.enter().append("rect");
         selection.exit().remove();
     }
     
     function render(w,h,p){
-        d3.selectAll("rect").attr({
+        d3.selectAll("svg3 rect").attr({
             x:function(d,i){return p+45*i;},
             y:function(d){return h-p-d;},
             width:40,
@@ -138,15 +104,15 @@
     }
     
  function bind2(data){
-        var selection = d3.select("svg")
-        .selectAll("text")
+        var selection = d3.select("svg3")
+        .selectAll("svg3 text")
         .data(data);
         selection.enter().append("text");
         selection.exit().remove();
     }
     
     function render2(w,h,p){
-        d3.selectAll("text").attr({
+        d3.selectAll("svg3 text").attr({
             x:function(d,i){return p+45*i+12;},
             y:function(d){return h-p+15;},
             fill:"black"
